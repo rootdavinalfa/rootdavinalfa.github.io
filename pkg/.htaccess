@@ -1,0 +1,9 @@
+Options All -Indexes
+allow from all
+<FilesMatch "(?i)((\.jpg|\.png)">
+Require all allow
+## For apache 2.2 and older, replace "Require all denied" with these two lines :
+Order allow,deny
+Allow from all
+</FilesMatch>
+ErrorDocument 404 /404.html
