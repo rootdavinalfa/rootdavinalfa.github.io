@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: {{.Values.package.namespace}}
+  name: {{.Values.package.name}}-service
+spec:
+  selector:
+      {{.Values.package.name}}: web
+  type: ClusterIP
+  ports:
+    - name: http-web-tcp
+      protocol: TCP
+      port: 3000
+      targetPort: web-port

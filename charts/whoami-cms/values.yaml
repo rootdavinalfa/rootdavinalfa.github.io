@@ -1,0 +1,23 @@
+package:
+  name: "xyz.dvnlabs.whoamicms"
+  namespace: "whoami-cms"
+  image:
+    tag: "latest"
+whoami:
+  port: "3000"
+  certificate:
+    secretName: "whoami-cms-cert"
+  clusterIssuer: "letsencrypt-prod"
+  ingressClass: "traefik"
+  router:
+    middleware: "default-redirect-https@kubernetescrd"
+    host: "localhost"
+  environment:
+    API_URL: "http://localhost:3000"
+  secret:
+    DATABASE_URL: ""
+  replica: 1
+  rollingUpdate:
+    maxSurge: 3
+    maxUnavailable: 0
+

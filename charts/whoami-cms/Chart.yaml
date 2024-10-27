@@ -1,0 +1,8 @@
+apiVersion: v2
+name: "Personal CMS (WHOAMI CMS)"
+version: "0.0.1"
+appVersion: "0.0.1"
+description: "A cms for personal portfolio and blog"
+maintainers:
+  - name: "Davin Alfarizky P.B"
+    email: "dbasudewa@gmail.com"
