@@ -1,5 +1,5 @@
 apiVersion: v2
-name: "Personal CMS (WHOAMI CMS)"
+name: "whoami-cms"
 version: "0.0.1"
 appVersion: "0.0.1"
 description: "A cms for personal portfolio and blog"
