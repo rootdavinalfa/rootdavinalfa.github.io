@@ -22,7 +22,7 @@ spec:
         {{.Values.package.name}}: web
     spec:
       containers:
-        - image: {{"rootdavinalfa/whoami-cms:".Values.package.image.tag}}
+        - image: {{"rootdavinalfa/whoami-cms":.Values.package.image.tag}}
           name: web
           readinessProbe:
             httpGet:
