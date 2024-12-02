@@ -1,5 +1,5 @@
 package:
-  name: "xyz.dvnlabs.whoamicms"
+  name: whoamicms-{{.Values.package.namespace}}
   namespace: "whoami-cms"
   image:
     tag: "45c764d"
