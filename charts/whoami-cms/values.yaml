@@ -2,7 +2,7 @@ package:
   name: "xyz.dvnlabs.whoamicms"
   namespace: "whoami-cms"
   image:
-    tag: "latest"
+    tag: "45c764d"
 whoami:
   port: "3000"
   certificate:
