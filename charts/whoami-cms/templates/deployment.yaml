@@ -22,7 +22,7 @@ spec:
         {{.Values.package.name}}: web
     spec:
       containers:
-        - image: "rootdavinalfa/whoami-cms:{{.Values.package.image.tag}}"
+        - image: rootdavinalfa/whoami-cms:{{.Values.package.image.tag}}
           name: web
           readinessProbe:
             httpGet:
@@ -41,9 +41,9 @@ spec:
           imagePullPolicy: IfNotPresent
           envFrom:
             - configMapRef:
-                - {{.Values.package.name"-configmap"}}
+                - {{.Values.package.name}}-configmap
             - secretRef:
-                - {{.Values.package.name"-secret"}}
+                - {{.Values.package.name}}-secret
           ports:
             - name: web-port
               containerPort: 3000
