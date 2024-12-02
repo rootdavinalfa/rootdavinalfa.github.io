@@ -1,7 +1,7 @@
 apiVersion: v2
 name: "whoami-cms"
-version: "0.0.4"
-appVersion: "0.0.4"
+version: "0.0.5"
+appVersion: "0.0.5"
 description: "A cms for personal portfolio and blog"
 maintainers:
   - name: "Davin Alfarizky P.B"
