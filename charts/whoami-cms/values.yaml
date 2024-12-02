@@ -1,5 +1,5 @@
 package:
-  name: whoamicms-{{.Values.package.namespace}}
+  name: whoamicms
   namespace: "whoami-cms"
   image:
     tag: "45c764d"
