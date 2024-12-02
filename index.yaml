@@ -2,6 +2,18 @@ apiVersion: v1
 entries:
   whoami-cms:
   - apiVersion: v2
+    appVersion: 0.0.10
+    created: "2024-12-02T06:39:57.467459374Z"
+    description: A cms for personal portfolio and blog
+    digest: 94c8faa8f16abd83cf13e5c85dcae5ac1492618c94338dce9f3192c771234767
+    maintainers:
+    - email: dbasudewa@gmail.com
+      name: Davin Alfarizky P.B
+    name: whoami-cms
+    urls:
+    - https://github.com/rootdavinalfa/rootdavinalfa.github.io/releases/download/whoami-cms-0.0.10/whoami-cms-0.0.10.tgz
+    version: 0.0.10
+  - apiVersion: v2
     appVersion: 0.0.9
     created: "2024-12-02T05:28:50.1029197Z"
     description: A cms for personal portfolio and blog
@@ -97,4 +109,4 @@ entries:
     urls:
     - https://github.com/rootdavinalfa/rootdavinalfa.github.io/releases/download/whoami-cms-0.0.2/whoami-cms-0.0.2.tgz
     version: 0.0.2
-generated: "2024-12-02T05:28:50.102953423Z"
+generated: "2024-12-02T06:39:57.467496965Z"
