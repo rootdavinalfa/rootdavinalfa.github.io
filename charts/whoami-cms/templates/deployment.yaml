@@ -41,9 +41,9 @@ spec:
           imagePullPolicy: IfNotPresent
           envFrom:
             - configMapRef:
-                - {{.Values.package.name}}-configmap
+                name: {{.Values.package.name}}-configmap
             - secretRef:
-                - {{.Values.package.name}}-secret
+                name: {{.Values.package.name}}-secret
           ports:
             - name: web-port
               containerPort: 3000
