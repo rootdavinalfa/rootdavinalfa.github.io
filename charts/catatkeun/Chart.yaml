@@ -1,0 +1,8 @@
+apiVersion: v2
+name: "catatkeun"
+version: "0.0.1"
+appVersion: "0.0.1"
+description: "Track your monthly spend"
+maintainers:
+  - name: "Davin Alfarizky P.B"
+    email: "dbasudewa@gmail.com"

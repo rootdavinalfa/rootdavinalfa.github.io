@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{.Values.package.name}}
+  namespace: {{.Values.package.namespace}}
+  labels:
+    app: {{.Values.package.name}}
+spec:
+  replicas: {{.Values.catatkeun.replica}}
+  selector:
+    matchLabels:
+      {{.Values.package.name}}: web
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: {{.Values.catatkeun.rollingUpdate.maxSurge}}
+      maxUnavailable: {{.Values.catatkeun.rollingUpdate.maxUnavailable}}
+  template:
+    metadata:
+      labels:
+        {{.Values.package.name}}: web
+    spec:
+      containers:
+        - image: {{ .Values.package.image }}
+          name: web
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 3000
+            initialDelaySeconds: 10
+            timeoutSeconds: 2
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 3000
+            initialDelaySeconds: 120
+            timeoutSeconds: 8
+            periodSeconds: 5
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: {{.Values.package.name}}-configmap
+            - secretRef:
+                name: {{.Values.package.name}}-secret
+          ports:
+            - name: web-port
+              containerPort: 3000

@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{.Values.package.name}}-network
+  namespace: {{.Values.package.namespace}}
+  annotations:
+    cert-manager.io/cluster-issuer: {{.Values.catatkeun.clusterIssuer}}
+    kubernetes.io/ingress.class: {{.Values.catatkeun.ingressClass}}
+    traefik.ingress.kubernetes.io/router.middlewares: {{.Values.catatkeun.router.middleware}}
+spec:
+  rules:
+    - host: {{.Values.catatkeun.router.host}}
+      http:
+        paths:
+          - backend:
+              service:
+                name: {{.Values.package.name}}-service
+                port:
+                  number: 3000
+            path: /
+            pathType: Prefix
+  tls:
+    - hosts:
+        - {{.Values.catatkeun.router.host}}
+      secretName: {{.Values.catatkeun.certificate.secretName}}
