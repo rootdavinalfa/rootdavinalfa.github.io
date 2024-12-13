@@ -26,14 +26,14 @@ spec:
           name: web
           readinessProbe:
             httpGet:
-              path: /
+              path: /api/health
               port: 3000
             initialDelaySeconds: 10
             timeoutSeconds: 2
             periodSeconds: 5
           livenessProbe:
             httpGet:
-              path: /
+              path: /api/health
               port: 3000
             initialDelaySeconds: 120
             timeoutSeconds: 8
