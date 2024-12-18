@@ -1,7 +1,7 @@
 apiVersion: v2
 name: "catatkeun"
-version: "0.0.7"
-appVersion: "0.0.7"
+version: "0.0.8"
+appVersion: "0.0.8"
 description: "Track your monthly spend"
 maintainers:
   - name: "Davin Alfarizky P.B"
