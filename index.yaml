@@ -2,6 +2,18 @@ apiVersion: v1
 entries:
   catatkeun:
   - apiVersion: v2
+    appVersion: 0.0.10
+    created: "2024-12-19T11:54:21.643429807Z"
+    description: Track your monthly spend
+    digest: e0726b317a95b043c48ff166dae126dfc11a569bb3758e7e1fad236bbfa265a5
+    maintainers:
+    - email: dbasudewa@gmail.com
+      name: Davin Alfarizky P.B
+    name: catatkeun
+    urls:
+    - https://github.com/rootdavinalfa/rootdavinalfa.github.io/releases/download/catatkeun-0.0.10/catatkeun-0.0.10.tgz
+    version: 0.0.10
+  - apiVersion: v2
     appVersion: 0.0.9
     created: "2024-12-18T14:07:58.052100044Z"
     description: Track your monthly spend
@@ -218,4 +230,4 @@ entries:
     urls:
     - https://github.com/rootdavinalfa/rootdavinalfa.github.io/releases/download/whoami-cms-0.0.2/whoami-cms-0.0.2.tgz
     version: 0.0.2
-generated: "2024-12-18T14:07:58.052184492Z"
+generated: "2024-12-19T11:54:21.643491262Z"
