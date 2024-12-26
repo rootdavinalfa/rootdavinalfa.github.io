@@ -1,7 +1,7 @@
 package:
   name: catatkeun
   namespace: "catatkeun"
-  image: "rootdavinalfa/catatkeun:0d0d6e7"
+  image: "rootdavinalfa/catatkeun:ac48571"
 catatkeun:
   port: "3000"
   certificate:
