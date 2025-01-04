@@ -6,3 +6,4 @@ metadata:
     app: {{ .Release.Name }}
 data:
   NEXT_PUBLIC_API_URL: "{{ .Values.catatkeun.environment.API_URL | required "API_URL is required" }}"
+  NEXT_PUBLIC_HIGHLIGHT: {{ .Values.catatkeun.environment.HIGHLIGHT_PROJECT_ID | quote }}
