@@ -2,7 +2,7 @@ package:
   name: whoamicms
   namespace: "whoami-cms"
   image:
-    tag: "26a8301"
+    tag: "01cb443"
 whoami:
   port: "3000"
   certificate:
