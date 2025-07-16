@@ -39,9 +39,6 @@ spec:
             timeoutSeconds: 8
             periodSeconds: 5
           imagePullPolicy: IfNotPresent
-          env:
-            - name: HOSTNAME
-              value: "0.0.0.0"
           envFrom:
             - configMapRef:
                 name: {{.Values.package.name}}-configmap
