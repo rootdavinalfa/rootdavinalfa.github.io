@@ -1,6 +1,6 @@
 apiVersion: v2
 name: "whoami-cms"
-version: "0.0.12"
+version: "0.0.13"
 appVersion: "0.0.12"
 description: "A cms for personal portfolio and blog"
 maintainers:
