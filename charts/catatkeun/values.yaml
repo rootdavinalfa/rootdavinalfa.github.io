@@ -23,6 +23,8 @@ secrets:
   BETTER_AUTH_SECRET: ""         # Required: generate with openssl rand -base64 32
   GOOGLE_CLIENT_ID: ""           # Required: Google OAuth client ID
   GOOGLE_CLIENT_SECRET: ""        # Required: Google OAuth client secret
+  # MongoDB Atlas example:
+  # mongodb+srv://user:pass@cluster0.fioyv.mongodb.net/catatkeun?retryWrites=true&w=majority
   DATABASE_URL: ""               # Required: MongoDB connection string
   RECURRING_JOB_SECRET: ""       # Required: secret for recurring job scheduler
 
@@ -75,7 +77,10 @@ recurringJobs:
 
 networkPolicy:
   enabled: true
-  ingressFromNamespace: ingress-nginx
+  # k3s default Traefik runs in kube-system.
+  # Change this if your ingress controller lives in a different namespace.
+  ingressFromNamespace: kube-system
+  # MongoDB Atlas uses port 27017 (external, egress allowed to anywhere on this port).
   mongodbPort: 27017
 
 autoscaling:
@@ -86,7 +91,11 @@ autoscaling:
 
 ingress:
   enabled: false
-  className: ""
+  className: "traefik"
+  # k3s Traefik example annotations:
+  # annotations:
+  #   cert-manager.io/cluster-issuer: "letsencrypt-prod"
+  #   traefik.ingress.kubernetes.io/router.middlewares: "default-redirect-https@kubernetescrd"
   annotations: {}
   hosts: []
   tls: []
