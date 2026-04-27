@@ -65,7 +65,7 @@ spec:
             - -c
             - |
               while true; do
-                wget -qO- http://localhost:3000/api/jobs/recurring-transactions || true
+                wget -qO- http://{{ include "catatkeun.fullname" . }}-svc.{{ .Values.namespace | default .Release.Namespace }}.svc.{{ .Values.clusterDomain }}:{{ .Values.service.port }}/api/jobs/recurring-transactions || true
                 sleep 86400
               done
           resources:

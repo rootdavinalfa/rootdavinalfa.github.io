@@ -29,7 +29,7 @@ spec:
                 - |
                   curl -sf \
                     -H "Authorization: Bearer $RECURRING_JOB_SECRET" \
-                    http://{{ include "catatkeun.fullname" . }}-svc:{{ .Values.service.port }}/api/jobs/recurring-transactions
+                    http://{{ include "catatkeun.fullname" . }}-svc.{{ .Values.namespace | default .Release.Namespace }}.svc.{{ .Values.clusterDomain }}:{{ .Values.service.port }}/api/jobs/recurring-transactions
               envFrom:
                 - secretRef:
                     name: {{ include "catatkeun.fullname" . }}-secret

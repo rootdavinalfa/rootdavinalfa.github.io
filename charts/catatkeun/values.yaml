@@ -9,6 +9,7 @@ nameOverride: ""
 fullnameOverride: ""
 
 namespace: catatkeun
+clusterDomain: cluster.local
 
 config:
   NODE_ENV: production

@@ -23,9 +23,19 @@ spec:
     - host: {{ .host | quote }}
       http:
         paths:
+          {{- if .paths }}
           {{- range .paths }}
           - path: {{ .path }}
             pathType: {{ .pathType | default "Prefix" }}
+            backend:
+              service:
+                name: {{ include "catatkeun.fullname" $ }}-svc
+                port:
+                  number: {{ $.Values.service.port }}
+          {{- end }}
+          {{- else }}
+          - path: /
+            pathType: Prefix
             backend:
               service:
                 name: {{ include "catatkeun.fullname" $ }}-svc
