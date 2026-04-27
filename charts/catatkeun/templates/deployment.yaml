@@ -1,49 +1,73 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{.Values.package.name}}
-  namespace: {{.Values.package.namespace}}
+  name: {{ include "catatkeun.fullname" . }}
+  namespace: {{ .Values.namespace | default .Release.Namespace }}
   labels:
-    app: {{.Values.package.name}}
+    {{- include "catatkeun.labels" . | nindent 4 }}
 spec:
-  replicas: {{.Values.catatkeun.replica}}
+  replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      {{.Values.package.name}}: web
-  minReadySeconds: 10
+      {{- include "catatkeun.selectorLabels" . | nindent 6 }}
   strategy:
     type: RollingUpdate
     rollingUpdate:
-      maxSurge: {{.Values.catatkeun.rollingUpdate.maxSurge}}
-      maxUnavailable: {{.Values.catatkeun.rollingUpdate.maxUnavailable}}
+      maxSurge: 25%
+      maxUnavailable: 0
   template:
     metadata:
       labels:
-        {{.Values.package.name}}: web
+        {{- include "catatkeun.selectorLabels" . | nindent 8 }}
     spec:
       containers:
-        - image: {{ .Values.package.image }}
-          name: web
-          readinessProbe:
-            httpGet:
-              path: /api/health
-              port: 3000
-            initialDelaySeconds: 10
-            timeoutSeconds: 2
-            periodSeconds: 5
-          livenessProbe:
-            httpGet:
-              path: /api/health
-              port: 3000
-            initialDelaySeconds: 120
-            timeoutSeconds: 8
-            periodSeconds: 5
-          imagePullPolicy: IfNotPresent
-          envFrom:
-            - configMapRef:
-                name: {{.Values.package.name}}-configmap
-            - secretRef:
-                name: {{.Values.package.name}}-secret
+        - name: web
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: web-port
               containerPort: 3000
+          envFrom:
+            - configMapRef:
+                name: {{ include "catatkeun.fullname" . }}-configmap
+            - secretRef:
+                name: {{ include "catatkeun.fullname" . }}-secret
+          livenessProbe:
+            httpGet:
+              path: {{ .Values.livenessProbe.path }}
+              port: 3000
+            initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
+            failureThreshold: {{ .Values.livenessProbe.failureThreshold }}
+          readinessProbe:
+            httpGet:
+              path: {{ .Values.readinessProbe.path }}
+              port: 3000
+            initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
+            failureThreshold: {{ .Values.readinessProbe.failureThreshold }}
+          startupProbe:
+            httpGet:
+              path: {{ .Values.startupProbe.path }}
+              port: 3000
+            initialDelaySeconds: {{ .Values.startupProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.startupProbe.periodSeconds }}
+            failureThreshold: {{ .Values.startupProbe.failureThreshold }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+        {{- if eq .Values.recurringJobs.mode "sidecar" }}
+        - name: recurring-jobs
+          image: alpine:latest
+          command:
+            - /bin/sh
+            - -c
+            - |
+              while true; do
+                wget -qO- http://localhost:3000/api/jobs/recurring-transactions || true
+                sleep 86400
+              done
+          resources:
+            {{- toYaml .Values.recurringJobs.sidecarResources | nindent 12 }}
+        {{- end }}

@@ -1,0 +1,36 @@
+{{- if eq .Values.recurringJobs.mode "cronjob" }}
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ include "catatkeun.fullname" . }}-recurring-jobs
+  namespace: {{ .Values.namespace | default .Release.Namespace }}
+  labels:
+    {{- include "catatkeun.labels" . | nindent 4 }}
+spec:
+  schedule: {{ .Values.recurringJobs.schedule | quote }}
+  timeZone: {{ .Values.recurringJobs.timeZone | quote }}
+  concurrencyPolicy: {{ .Values.recurringJobs.concurrencyPolicy }}
+  successfulJobsHistoryLimit: {{ .Values.recurringJobs.successfulJobsHistoryLimit }}
+  failedJobsHistoryLimit: {{ .Values.recurringJobs.failedJobsHistoryLimit }}
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            {{- include "catatkeun.selectorLabels" . | nindent 12 }}
+        spec:
+          restartPolicy: OnFailure
+          containers:
+            - name: recurring-jobs
+              image: curlimages/curl:latest
+              command:
+                - /bin/sh
+                - -c
+                - |
+                  curl -sf \
+                    -H "Authorization: Bearer $RECURRING_JOB_SECRET" \
+                    http://{{ include "catatkeun.fullname" . }}-svc:{{ .Values.service.port }}/api/jobs/recurring-transactions
+              envFrom:
+                - secretRef:
+                    name: {{ include "catatkeun.fullname" . }}-secret
+{{- end }}

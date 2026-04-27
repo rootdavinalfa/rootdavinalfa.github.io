@@ -1,10 +1,11 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{.Values.package.name}}-configmap
-  namespace: {{.Values.package.namespace}}
+  name: {{ include "catatkeun.fullname" . }}-configmap
+  namespace: {{ .Values.namespace | default .Release.Namespace }}
   labels:
-    app: {{ .Release.Name }}
+    {{- include "catatkeun.labels" . | nindent 4 }}
 data:
-  NEXT_PUBLIC_API_URL: "{{ .Values.catatkeun.environment.API_URL | required "API_URL is required" }}"
-  NEXT_PUBLIC_HIGHLIGHT: {{ .Values.catatkeun.environment.HIGHLIGHT_PROJECT_ID | quote }}
+  {{- range $key, $value := .Values.config }}
+  {{ $key }}: {{ $value | quote }}
+  {{- end }}

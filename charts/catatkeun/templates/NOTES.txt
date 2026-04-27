@@ -1,0 +1,19 @@
+1. Get the application URL by running these commands:
+{{- if .Values.ingress.enabled }}
+{{- range .Values.ingress.hosts }}
+  http{{ if $.Values.ingress.tls }}s{{ end }}://{{ .host }}
+{{- end }}
+{{- else }}
+  export POD_NAME=$(kubectl get pods --namespace {{ .Values.namespace | default .Release.Namespace }} -l "app.kubernetes.io/name={{ include "catatkeun.name" . }},app.kubernetes.io/component=web" -o jsonpath="{.items[0].metadata.name}")
+  export CONTAINER_PORT=$(kubectl get pod --namespace {{ .Values.namespace | default .Release.Namespace }} $POD_NAME -o jsonpath="{.spec.containers[0].ports[0].containerPort}")
+  kubectl --namespace {{ .Values.namespace | default .Release.Namespace }} port-forward $POD_NAME 8080:$CONTAINER_PORT
+  echo "Visit http://127.0.0.1:8080 to use your application"
+{{- end }}
+
+2. Recurring jobs mode: {{ .Values.recurringJobs.mode }}
+{{- if eq .Values.recurringJobs.mode "cronjob" }}
+   CronJob schedule: {{ .Values.recurringJobs.schedule }} ({{ .Values.recurringJobs.timeZone }})
+   View CronJob: kubectl get cronjob {{ include "catatkeun.fullname" . }}-recurring-jobs -n {{ .Values.namespace | default .Release.Namespace }}
+{{- else }}
+   Sidecar container is running within each pod.
+{{- end }}

@@ -1,14 +1,16 @@
 apiVersion: v1
 kind: Service
 metadata:
-  namespace: {{.Values.package.namespace}}
-  name: {{.Values.package.name}}-service
+  name: {{ include "catatkeun.fullname" . }}-svc
+  namespace: {{ .Values.namespace | default .Release.Namespace }}
+  labels:
+    {{- include "catatkeun.labels" . | nindent 4 }}
 spec:
+  type: {{ .Values.service.type }}
   selector:
-      {{.Values.package.name}}: web
-  type: ClusterIP
+    {{- include "catatkeun.selectorLabels" . | nindent 4 }}
   ports:
-    - name: http-web-tcp
+    - name: http
       protocol: TCP
-      port: 3000
+      port: {{ .Values.service.port }}
       targetPort: web-port
